@@ -1,0 +1,902 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="taphoaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="chitiethdb">
+          <Key>
+            <PropertyRef Name="mahdb" />
+            <PropertyRef Name="maSP" />
+          </Key>
+          <Property Name="mahdb" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="maSP" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="soluong" Type="int" />
+        </EntityType>
+        <EntityType Name="chitiethdn">
+          <Key>
+            <PropertyRef Name="mahdn" />
+            <PropertyRef Name="maSP" />
+          </Key>
+          <Property Name="mahdn" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="maSP" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="gianhap" Type="int" />
+          <Property Name="soluong" Type="int" />
+        </EntityType>
+        <EntityType Name="ChucVu">
+          <Key>
+            <PropertyRef Name="maCV" />
+          </Key>
+          <Property Name="maCV" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="tenCV" Type="nvarchar" MaxLength="50" />
+          <Property Name="mota" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="hdn">
+          <Key>
+            <PropertyRef Name="mahdn" />
+          </Key>
+          <Property Name="mahdn" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ngayNhap" Type="date" />
+          <Property Name="manv" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="mancc" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hoadonban">
+          <Key>
+            <PropertyRef Name="mahdb" />
+          </Key>
+          <Property Name="mahdb" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="maNV" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="maKH" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ngayBan" Type="date" />
+          <Property Name="hinhthucthanhtoan" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="khachhang">
+          <Key>
+            <PropertyRef Name="maKH" />
+          </Key>
+          <Property Name="maKH" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="hoten" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sdt" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ncc">
+          <Key>
+            <PropertyRef Name="mancc" />
+          </Key>
+          <Property Name="mancc" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="diachi" Type="nvarchar" MaxLength="50" />
+          <Property Name="sdt" Type="int" />
+          <Property Name="tenncc" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="NhanVien">
+          <Key>
+            <PropertyRef Name="maNV" />
+          </Key>
+          <Property Name="maNV" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="hoten" Type="nvarchar" MaxLength="50" />
+          <Property Name="namsinh" Type="date" />
+          <Property Name="sdt" Type="int" Nullable="false" />
+          <Property Name="maCV" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="gioitinh" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="pw" Type="varchar" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sanpham">
+          <Key>
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="masp" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="tensp" Type="nvarchar" MaxLength="50" />
+          <Property Name="xuatxu" Type="nvarchar" MaxLength="50" />
+          <Property Name="giaban" Type="int" />
+          <Property Name="soluong" Type="int" />
+        </EntityType>
+        <Association Name="FK__chitiethd__mahdn__4AB81AF0">
+          <End Role="hdn" Type="Self.hdn" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="chitiethdn" Type="Self.chitiethdn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hdn">
+              <PropertyRef Name="mahdn" />
+            </Principal>
+            <Dependent Role="chitiethdn">
+              <PropertyRef Name="mahdn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chitiethdn__maSP__4BAC3F29">
+          <End Role="sanpham" Type="Self.sanpham" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="chitiethdn" Type="Self.chitiethdn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sanpham">
+              <PropertyRef Name="masp" />
+            </Principal>
+            <Dependent Role="chitiethdn">
+              <PropertyRef Name="maSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hdn__mancc__48CFD27E">
+          <End Role="ncc" Type="Self.ncc" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hdn" Type="Self.hdn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ncc">
+              <PropertyRef Name="mancc" />
+            </Principal>
+            <Dependent Role="hdn">
+              <PropertyRef Name="mancc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hdn__manv__47DBAE45">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hdn" Type="Self.hdn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="maNV" />
+            </Principal>
+            <Dependent Role="hdn">
+              <PropertyRef Name="manv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hoadonban__maKH__4222D4EF">
+          <End Role="khachhang" Type="Self.khachhang" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hoadonban" Type="Self.hoadonban" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="khachhang">
+              <PropertyRef Name="maKH" />
+            </Principal>
+            <Dependent Role="hoadonban">
+              <PropertyRef Name="maKH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hoadonban__maNV__412EB0B6">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hoadonban" Type="Self.hoadonban" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="maNV" />
+            </Principal>
+            <Dependent Role="hoadonban">
+              <PropertyRef Name="maNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NhanVien__maCV__38996AB5">
+          <End Role="ChucVu" Type="Self.ChucVu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChucVu">
+              <PropertyRef Name="maCV" />
+            </Principal>
+            <Dependent Role="NhanVien">
+              <PropertyRef Name="maCV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cthdb1">
+          <End Role="hoadonban" Type="Self.hoadonban" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="chitiethdb" Type="Self.chitiethdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hoadonban">
+              <PropertyRef Name="mahdb" />
+            </Principal>
+            <Dependent Role="chitiethdb">
+              <PropertyRef Name="mahdb" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cthdb2">
+          <End Role="sanpham" Type="Self.sanpham" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="chitiethdb" Type="Self.chitiethdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sanpham">
+              <PropertyRef Name="masp" />
+            </Principal>
+            <Dependent Role="chitiethdb">
+              <PropertyRef Name="maSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DoanhThu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tungay" Type="date" Mode="In" />
+          <Parameter Name="denngay" Type="date" Mode="In" />
+        </Function>
+        <Function Name="LoiNhuan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tungay" Type="date" Mode="In" />
+          <Parameter Name="denngay" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SearchHDB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tungay" Type="datetime" Mode="In" />
+          <Parameter Name="denngay" Type="datetime" Mode="In" />
+          <Parameter Name="sdt" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SearchHDN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tungay" Type="datetime" Mode="In" />
+          <Parameter Name="denngay" Type="datetime" Mode="In" />
+          <Parameter Name="tenncc" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SoKhachHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tungay" Type="date" Mode="In" />
+          <Parameter Name="denngay" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_SearchKH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sdt" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SearchNCC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sdt" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SearchNV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="manv" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_SearchSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tensp" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="TKTheoNgay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tungay" Type="date" Mode="In" />
+          <Parameter Name="denngay" Type="date" Mode="In" />
+        </Function>
+        <Function Name="TongDonHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tungay" Type="date" Mode="In" />
+          <Parameter Name="denngay" Type="date" Mode="In" />
+        </Function>
+        <Function Name="TongSanPham" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tungay" Type="date" Mode="In" />
+          <Parameter Name="denngay" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Top5BanChay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tungay" Type="date" Mode="In" />
+          <Parameter Name="denngay" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="taphoaModelStoreContainer">
+          <EntitySet Name="chitiethdb" EntityType="Self.chitiethdb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chitiethdn" EntityType="Self.chitiethdn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChucVu" EntityType="Self.ChucVu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hdn" EntityType="Self.hdn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hoadonban" EntityType="Self.hoadonban" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="khachhang" EntityType="Self.khachhang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ncc" EntityType="Self.ncc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sanpham" EntityType="Self.sanpham" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__chitiethd__mahdn__4AB81AF0" Association="Self.FK__chitiethd__mahdn__4AB81AF0">
+            <End Role="hdn" EntitySet="hdn" />
+            <End Role="chitiethdn" EntitySet="chitiethdn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chitiethdn__maSP__4BAC3F29" Association="Self.FK__chitiethdn__maSP__4BAC3F29">
+            <End Role="sanpham" EntitySet="sanpham" />
+            <End Role="chitiethdn" EntitySet="chitiethdn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hdn__mancc__48CFD27E" Association="Self.FK__hdn__mancc__48CFD27E">
+            <End Role="ncc" EntitySet="ncc" />
+            <End Role="hdn" EntitySet="hdn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hdn__manv__47DBAE45" Association="Self.FK__hdn__manv__47DBAE45">
+            <End Role="NhanVien" EntitySet="NhanVien" />
+            <End Role="hdn" EntitySet="hdn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hoadonban__maKH__4222D4EF" Association="Self.FK__hoadonban__maKH__4222D4EF">
+            <End Role="khachhang" EntitySet="khachhang" />
+            <End Role="hoadonban" EntitySet="hoadonban" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hoadonban__maNV__412EB0B6" Association="Self.FK__hoadonban__maNV__412EB0B6">
+            <End Role="NhanVien" EntitySet="NhanVien" />
+            <End Role="hoadonban" EntitySet="hoadonban" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NhanVien__maCV__38996AB5" Association="Self.FK__NhanVien__maCV__38996AB5">
+            <End Role="ChucVu" EntitySet="ChucVu" />
+            <End Role="NhanVien" EntitySet="NhanVien" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cthdb1" Association="Self.fk_cthdb1">
+            <End Role="hoadonban" EntitySet="hoadonban" />
+            <End Role="chitiethdb" EntitySet="chitiethdb" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cthdb2" Association="Self.fk_cthdb2">
+            <End Role="sanpham" EntitySet="sanpham" />
+            <End Role="chitiethdb" EntitySet="chitiethdb" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="taphoaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="chitiethdb">
+          <Key>
+            <PropertyRef Name="mahdb" />
+            <PropertyRef Name="maSP" />
+          </Key>
+          <Property Name="mahdb" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="maSP" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="soluong" Type="Int32" />
+          <NavigationProperty Name="hoadonban" Relationship="Self.fk_cthdb1" FromRole="chitiethdb" ToRole="hoadonban" />
+          <NavigationProperty Name="sanpham" Relationship="Self.fk_cthdb2" FromRole="chitiethdb" ToRole="sanpham" />
+        </EntityType>
+        <EntityType Name="chitiethdn">
+          <Key>
+            <PropertyRef Name="mahdn" />
+            <PropertyRef Name="maSP" />
+          </Key>
+          <Property Name="mahdn" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="maSP" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gianhap" Type="Int32" />
+          <Property Name="soluong" Type="Int32" />
+          <NavigationProperty Name="hdn" Relationship="Self.FK__chitiethd__mahdn__4AB81AF0" FromRole="chitiethdn" ToRole="hdn" />
+          <NavigationProperty Name="sanpham" Relationship="Self.FK__chitiethdn__maSP__4BAC3F29" FromRole="chitiethdn" ToRole="sanpham" />
+        </EntityType>
+        <EntityType Name="ChucVu">
+          <Key>
+            <PropertyRef Name="maCV" />
+          </Key>
+          <Property Name="maCV" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tenCV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mota" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NhanViens" Relationship="Self.FK__NhanVien__maCV__38996AB5" FromRole="ChucVu" ToRole="NhanVien" />
+        </EntityType>
+        <EntityType Name="hdn">
+          <Key>
+            <PropertyRef Name="mahdn" />
+          </Key>
+          <Property Name="mahdn" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ngayNhap" Type="DateTime" Precision="0" />
+          <Property Name="manv" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mancc" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="chitiethdns" Relationship="Self.FK__chitiethd__mahdn__4AB81AF0" FromRole="hdn" ToRole="chitiethdn" />
+          <NavigationProperty Name="ncc" Relationship="Self.FK__hdn__mancc__48CFD27E" FromRole="hdn" ToRole="ncc" />
+          <NavigationProperty Name="NhanVien" Relationship="Self.FK__hdn__manv__47DBAE45" FromRole="hdn" ToRole="NhanVien" />
+        </EntityType>
+        <EntityType Name="hoadonban">
+          <Key>
+            <PropertyRef Name="mahdb" />
+          </Key>
+          <Property Name="mahdb" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="maNV" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="maKH" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ngayBan" Type="DateTime" Precision="0" />
+          <Property Name="hinhthucthanhtoan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="chitiethdbs" Relationship="Self.fk_cthdb1" FromRole="hoadonban" ToRole="chitiethdb" />
+          <NavigationProperty Name="khachhang" Relationship="Self.FK__hoadonban__maKH__4222D4EF" FromRole="hoadonban" ToRole="khachhang" />
+          <NavigationProperty Name="NhanVien" Relationship="Self.FK__hoadonban__maNV__412EB0B6" FromRole="hoadonban" ToRole="NhanVien" />
+        </EntityType>
+        <EntityType Name="khachhang">
+          <Key>
+            <PropertyRef Name="maKH" />
+          </Key>
+          <Property Name="maKH" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hoten" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sdt" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="hoadonbans" Relationship="Self.FK__hoadonban__maKH__4222D4EF" FromRole="khachhang" ToRole="hoadonban" />
+        </EntityType>
+        <EntityType Name="ncc">
+          <Key>
+            <PropertyRef Name="mancc" />
+          </Key>
+          <Property Name="mancc" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="diachi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sdt" Type="Int32" />
+          <Property Name="tenncc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="hdns" Relationship="Self.FK__hdn__mancc__48CFD27E" FromRole="ncc" ToRole="hdn" />
+        </EntityType>
+        <EntityType Name="NhanVien">
+          <Key>
+            <PropertyRef Name="maNV" />
+          </Key>
+          <Property Name="maNV" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hoten" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="namsinh" Type="DateTime" Precision="0" />
+          <Property Name="sdt" Type="Int32" Nullable="false" />
+          <Property Name="maCV" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gioitinh" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pw" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ChucVu" Relationship="Self.FK__NhanVien__maCV__38996AB5" FromRole="NhanVien" ToRole="ChucVu" />
+          <NavigationProperty Name="hdns" Relationship="Self.FK__hdn__manv__47DBAE45" FromRole="NhanVien" ToRole="hdn" />
+          <NavigationProperty Name="hoadonbans" Relationship="Self.FK__hoadonban__maNV__412EB0B6" FromRole="NhanVien" ToRole="hoadonban" />
+        </EntityType>
+        <EntityType Name="sanpham">
+          <Key>
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="masp" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tensp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="xuatxu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="giaban" Type="Int32" />
+          <Property Name="soluong" Type="Int32" />
+          <NavigationProperty Name="chitiethdbs" Relationship="Self.fk_cthdb2" FromRole="sanpham" ToRole="chitiethdb" />
+          <NavigationProperty Name="chitiethdns" Relationship="Self.FK__chitiethdn__maSP__4BAC3F29" FromRole="sanpham" ToRole="chitiethdn" />
+        </EntityType>
+        <Association Name="fk_cthdb1">
+          <End Role="hoadonban" Type="Self.hoadonban" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="chitiethdb" Type="Self.chitiethdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hoadonban">
+              <PropertyRef Name="mahdb" />
+            </Principal>
+            <Dependent Role="chitiethdb">
+              <PropertyRef Name="mahdb" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cthdb2">
+          <End Role="sanpham" Type="Self.sanpham" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="chitiethdb" Type="Self.chitiethdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sanpham">
+              <PropertyRef Name="masp" />
+            </Principal>
+            <Dependent Role="chitiethdb">
+              <PropertyRef Name="maSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chitiethd__mahdn__4AB81AF0">
+          <End Role="hdn" Type="Self.hdn" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="chitiethdn" Type="Self.chitiethdn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hdn">
+              <PropertyRef Name="mahdn" />
+            </Principal>
+            <Dependent Role="chitiethdn">
+              <PropertyRef Name="mahdn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chitiethdn__maSP__4BAC3F29">
+          <End Role="sanpham" Type="Self.sanpham" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="chitiethdn" Type="Self.chitiethdn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sanpham">
+              <PropertyRef Name="masp" />
+            </Principal>
+            <Dependent Role="chitiethdn">
+              <PropertyRef Name="maSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NhanVien__maCV__38996AB5">
+          <End Role="ChucVu" Type="Self.ChucVu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChucVu">
+              <PropertyRef Name="maCV" />
+            </Principal>
+            <Dependent Role="NhanVien">
+              <PropertyRef Name="maCV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hdn__mancc__48CFD27E">
+          <End Role="ncc" Type="Self.ncc" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hdn" Type="Self.hdn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ncc">
+              <PropertyRef Name="mancc" />
+            </Principal>
+            <Dependent Role="hdn">
+              <PropertyRef Name="mancc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hdn__manv__47DBAE45">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hdn" Type="Self.hdn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="maNV" />
+            </Principal>
+            <Dependent Role="hdn">
+              <PropertyRef Name="manv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hoadonban__maKH__4222D4EF">
+          <End Role="khachhang" Type="Self.khachhang" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hoadonban" Type="Self.hoadonban" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="khachhang">
+              <PropertyRef Name="maKH" />
+            </Principal>
+            <Dependent Role="hoadonban">
+              <PropertyRef Name="maKH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hoadonban__maNV__412EB0B6">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hoadonban" Type="Self.hoadonban" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="maNV" />
+            </Principal>
+            <Dependent Role="hoadonban">
+              <PropertyRef Name="maNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="taphoaEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="chitiethdbs" EntityType="Self.chitiethdb" />
+          <EntitySet Name="chitiethdns" EntityType="Self.chitiethdn" />
+          <EntitySet Name="ChucVus" EntityType="Self.ChucVu" />
+          <EntitySet Name="hdns" EntityType="Self.hdn" />
+          <EntitySet Name="hoadonbans" EntityType="Self.hoadonban" />
+          <EntitySet Name="khachhangs" EntityType="Self.khachhang" />
+          <EntitySet Name="nccs" EntityType="Self.ncc" />
+          <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+          <EntitySet Name="sanphams" EntityType="Self.sanpham" />
+          <AssociationSet Name="fk_cthdb1" Association="Self.fk_cthdb1">
+            <End Role="hoadonban" EntitySet="hoadonbans" />
+            <End Role="chitiethdb" EntitySet="chitiethdbs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cthdb2" Association="Self.fk_cthdb2">
+            <End Role="sanpham" EntitySet="sanphams" />
+            <End Role="chitiethdb" EntitySet="chitiethdbs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chitiethd__mahdn__4AB81AF0" Association="Self.FK__chitiethd__mahdn__4AB81AF0">
+            <End Role="hdn" EntitySet="hdns" />
+            <End Role="chitiethdn" EntitySet="chitiethdns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chitiethdn__maSP__4BAC3F29" Association="Self.FK__chitiethdn__maSP__4BAC3F29">
+            <End Role="sanpham" EntitySet="sanphams" />
+            <End Role="chitiethdn" EntitySet="chitiethdns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NhanVien__maCV__38996AB5" Association="Self.FK__NhanVien__maCV__38996AB5">
+            <End Role="ChucVu" EntitySet="ChucVus" />
+            <End Role="NhanVien" EntitySet="NhanViens" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hdn__mancc__48CFD27E" Association="Self.FK__hdn__mancc__48CFD27E">
+            <End Role="ncc" EntitySet="nccs" />
+            <End Role="hdn" EntitySet="hdns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hdn__manv__47DBAE45" Association="Self.FK__hdn__manv__47DBAE45">
+            <End Role="NhanVien" EntitySet="NhanViens" />
+            <End Role="hdn" EntitySet="hdns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hoadonban__maKH__4222D4EF" Association="Self.FK__hoadonban__maKH__4222D4EF">
+            <End Role="khachhang" EntitySet="khachhangs" />
+            <End Role="hoadonban" EntitySet="hoadonbans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hoadonban__maNV__412EB0B6" Association="Self.FK__hoadonban__maNV__412EB0B6">
+            <End Role="NhanVien" EntitySet="NhanViens" />
+            <End Role="hoadonban" EntitySet="hoadonbans" />
+          </AssociationSet>
+          <FunctionImport Name="SearchHDB" ReturnType="Collection(taphoaModel.SearchHDB_Result)">
+            <Parameter Name="tungay" Mode="In" Type="DateTime" />
+            <Parameter Name="denngay" Mode="In" Type="DateTime" />
+            <Parameter Name="sdt" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SearchHDN" ReturnType="Collection(taphoaModel.SearchHDN_Result)">
+            <Parameter Name="tungay" Mode="In" Type="DateTime" />
+            <Parameter Name="denngay" Mode="In" Type="DateTime" />
+            <Parameter Name="tenncc" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SearchKH" ReturnType="Collection(taphoaModel.SP_SearchKH_Result)">
+          <Parameter Name="sdt" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SearchNCC" ReturnType="Collection(taphoaModel.SP_SearchNCC_Result)">
+          <Parameter Name="sdt" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SearchNV" ReturnType="Collection(taphoaModel.SP_SearchNV_Result)">
+          <Parameter Name="manv" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SearchSP" ReturnType="Collection(taphoaModel.SP_SearchSP_Result)">
+          <Parameter Name="tensp" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DoanhThu" ReturnType="Collection(Int32)">
+            <Parameter Name="tungay" Mode="In" Type="DateTime" />
+            <Parameter Name="denngay" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="LoiNhuan" ReturnType="Collection(Int32)">
+            <Parameter Name="tungay" Mode="In" Type="DateTime" />
+            <Parameter Name="denngay" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SoKhachHang" ReturnType="Collection(Int32)">
+            <Parameter Name="tungay" Mode="In" Type="DateTime" />
+            <Parameter Name="denngay" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="TKTheoNgay" ReturnType="Collection(taphoaModel.TKTheoNgay_Result)">
+            <Parameter Name="tungay" Mode="In" Type="DateTime" />
+            <Parameter Name="denngay" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="TongDonHang" ReturnType="Collection(Int32)">
+            <Parameter Name="tungay" Mode="In" Type="DateTime" />
+            <Parameter Name="denngay" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="TongSanPham" ReturnType="Collection(Int32)">
+            <Parameter Name="tungay" Mode="In" Type="DateTime" />
+            <Parameter Name="denngay" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Top5BanChay" ReturnType="Collection(taphoaModel.Top5BanChay_Result)">
+            <Parameter Name="tungay" Mode="In" Type="DateTime" />
+            <Parameter Name="denngay" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SearchHDB_Result">
+          <Property Type="String" Name="mahdb" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="maNV" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="maKH" Nullable="false" MaxLength="5" />
+          <Property Type="DateTime" Name="ngayBan" Nullable="true" />
+          <Property Type="String" Name="hinhthucthanhtoan" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SearchHDN_Result">
+          <Property Type="String" Name="mahdn" Nullable="false" MaxLength="5" />
+          <Property Type="DateTime" Name="ngayNhap" Nullable="true" />
+          <Property Type="String" Name="manv" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="mancc" Nullable="false" MaxLength="5" />
+        </ComplexType>
+        <ComplexType Name="SP_SearchKH_Result">
+          <Property Type="String" Name="maKH" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="hoten" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="sdt" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_SearchNCC_Result">
+          <Property Type="String" Name="mancc" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="diachi" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="sdt" Nullable="true" />
+          <Property Type="String" Name="tenncc" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SP_SearchNV_Result">
+          <Property Type="String" Name="maNV" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="hoten" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="namsinh" Nullable="true" />
+          <Property Type="Int32" Name="sdt" Nullable="false" />
+          <Property Type="String" Name="maCV" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="gioitinh" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="pw" Nullable="false" MaxLength="4" />
+        </ComplexType>
+        <ComplexType Name="SP_SearchSP_Result">
+          <Property Type="String" Name="masp" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="tensp" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="xuatxu" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="giaban" Nullable="true" />
+          <Property Type="Int32" Name="soluong" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="TKTheoNgay_Result">
+          <Property Type="DateTime" Name="NgayBan" Nullable="true" />
+          <Property Type="Int32" Name="DoanhThu" Nullable="true" />
+          <Property Type="Int32" Name="LoiNhuan" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Top5BanChay_Result">
+          <Property Type="String" Name="tensp" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="SoLuongBan" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="taphoaModelStoreContainer" CdmEntityContainer="taphoaEntities3">
+          <EntitySetMapping Name="chitiethdbs">
+            <EntityTypeMapping TypeName="taphoaModel.chitiethdb">
+              <MappingFragment StoreEntitySet="chitiethdb">
+                <ScalarProperty Name="mahdb" ColumnName="mahdb" />
+                <ScalarProperty Name="maSP" ColumnName="maSP" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chitiethdns">
+            <EntityTypeMapping TypeName="taphoaModel.chitiethdn">
+              <MappingFragment StoreEntitySet="chitiethdn">
+                <ScalarProperty Name="mahdn" ColumnName="mahdn" />
+                <ScalarProperty Name="maSP" ColumnName="maSP" />
+                <ScalarProperty Name="gianhap" ColumnName="gianhap" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChucVus">
+            <EntityTypeMapping TypeName="taphoaModel.ChucVu">
+              <MappingFragment StoreEntitySet="ChucVu">
+                <ScalarProperty Name="maCV" ColumnName="maCV" />
+                <ScalarProperty Name="tenCV" ColumnName="tenCV" />
+                <ScalarProperty Name="mota" ColumnName="mota" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hdns">
+            <EntityTypeMapping TypeName="taphoaModel.hdn">
+              <MappingFragment StoreEntitySet="hdn">
+                <ScalarProperty Name="mahdn" ColumnName="mahdn" />
+                <ScalarProperty Name="ngayNhap" ColumnName="ngayNhap" />
+                <ScalarProperty Name="manv" ColumnName="manv" />
+                <ScalarProperty Name="mancc" ColumnName="mancc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hoadonbans">
+            <EntityTypeMapping TypeName="taphoaModel.hoadonban">
+              <MappingFragment StoreEntitySet="hoadonban">
+                <ScalarProperty Name="mahdb" ColumnName="mahdb" />
+                <ScalarProperty Name="maNV" ColumnName="maNV" />
+                <ScalarProperty Name="maKH" ColumnName="maKH" />
+                <ScalarProperty Name="ngayBan" ColumnName="ngayBan" />
+                <ScalarProperty Name="hinhthucthanhtoan" ColumnName="hinhthucthanhtoan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="khachhangs">
+            <EntityTypeMapping TypeName="taphoaModel.khachhang">
+              <MappingFragment StoreEntitySet="khachhang">
+                <ScalarProperty Name="maKH" ColumnName="maKH" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nccs">
+            <EntityTypeMapping TypeName="taphoaModel.ncc">
+              <MappingFragment StoreEntitySet="ncc">
+                <ScalarProperty Name="mancc" ColumnName="mancc" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="tenncc" ColumnName="tenncc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NhanViens">
+            <EntityTypeMapping TypeName="taphoaModel.NhanVien">
+              <MappingFragment StoreEntitySet="NhanVien">
+                <ScalarProperty Name="maNV" ColumnName="maNV" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+                <ScalarProperty Name="namsinh" ColumnName="namsinh" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="maCV" ColumnName="maCV" />
+                <ScalarProperty Name="gioitinh" ColumnName="gioitinh" />
+                <ScalarProperty Name="pw" ColumnName="pw" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sanphams">
+            <EntityTypeMapping TypeName="taphoaModel.sanpham">
+              <MappingFragment StoreEntitySet="sanpham">
+                <ScalarProperty Name="masp" ColumnName="masp" />
+                <ScalarProperty Name="tensp" ColumnName="tensp" />
+                <ScalarProperty Name="xuatxu" ColumnName="xuatxu" />
+                <ScalarProperty Name="giaban" ColumnName="giaban" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SearchHDB" FunctionName="taphoaModel.Store.SearchHDB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="taphoaModel.SearchHDB_Result">
+                <ScalarProperty Name="mahdb" ColumnName="mahdb" />
+                <ScalarProperty Name="maNV" ColumnName="maNV" />
+                <ScalarProperty Name="maKH" ColumnName="maKH" />
+                <ScalarProperty Name="ngayBan" ColumnName="ngayBan" />
+                <ScalarProperty Name="hinhthucthanhtoan" ColumnName="hinhthucthanhtoan" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchHDN" FunctionName="taphoaModel.Store.SearchHDN">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="taphoaModel.SearchHDN_Result">
+                <ScalarProperty Name="mahdn" ColumnName="mahdn" />
+                <ScalarProperty Name="ngayNhap" ColumnName="ngayNhap" />
+                <ScalarProperty Name="manv" ColumnName="manv" />
+                <ScalarProperty Name="mancc" ColumnName="mancc" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SearchKH" FunctionName="taphoaModel.Store.SP_SearchKH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="taphoaModel.SP_SearchKH_Result">
+                <ScalarProperty Name="maKH" ColumnName="maKH" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SearchNCC" FunctionName="taphoaModel.Store.SP_SearchNCC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="taphoaModel.SP_SearchNCC_Result">
+                <ScalarProperty Name="mancc" ColumnName="mancc" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="tenncc" ColumnName="tenncc" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SearchNV" FunctionName="taphoaModel.Store.SP_SearchNV">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="taphoaModel.SP_SearchNV_Result">
+                <ScalarProperty Name="maNV" ColumnName="maNV" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+                <ScalarProperty Name="namsinh" ColumnName="namsinh" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="maCV" ColumnName="maCV" />
+                <ScalarProperty Name="gioitinh" ColumnName="gioitinh" />
+                <ScalarProperty Name="pw" ColumnName="pw" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SearchSP" FunctionName="taphoaModel.Store.SP_SearchSP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="taphoaModel.SP_SearchSP_Result">
+                <ScalarProperty Name="masp" ColumnName="masp" />
+                <ScalarProperty Name="tensp" ColumnName="tensp" />
+                <ScalarProperty Name="xuatxu" ColumnName="xuatxu" />
+                <ScalarProperty Name="giaban" ColumnName="giaban" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DoanhThu" FunctionName="taphoaModel.Store.DoanhThu" />
+          <FunctionImportMapping FunctionImportName="LoiNhuan" FunctionName="taphoaModel.Store.LoiNhuan" />
+          <FunctionImportMapping FunctionImportName="SoKhachHang" FunctionName="taphoaModel.Store.SoKhachHang" />
+          <FunctionImportMapping FunctionImportName="TKTheoNgay" FunctionName="taphoaModel.Store.TKTheoNgay">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="taphoaModel.TKTheoNgay_Result">
+                <ScalarProperty Name="NgayBan" ColumnName="NgayBan" />
+                <ScalarProperty Name="DoanhThu" ColumnName="DoanhThu" />
+                <ScalarProperty Name="LoiNhuan" ColumnName="LoiNhuan" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TongDonHang" FunctionName="taphoaModel.Store.TongDonHang" />
+          <FunctionImportMapping FunctionImportName="TongSanPham" FunctionName="taphoaModel.Store.TongSanPham" />
+          <FunctionImportMapping FunctionImportName="Top5BanChay" FunctionName="taphoaModel.Store.Top5BanChay">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="taphoaModel.Top5BanChay_Result">
+                <ScalarProperty Name="tensp" ColumnName="tensp" />
+                <ScalarProperty Name="SoLuongBan" ColumnName="SoLuongBan" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
